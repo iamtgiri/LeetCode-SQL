@@ -1,0 +1,77 @@
+-- Question: Customer Who Visited but Did Not Make Any Transactions
+--
+-- Table: Visits
+-- +------------+---------+
+-- | Column Name| Type    |
+-- +------------+---------+
+-- | visit_id   | int     |
+-- | customer_id| int     |
+-- +------------+---------+
+-- visit_id is unique. This table lists all mall visits by customers.
+--
+-- Table: Transactions
+-- +----------------+---------+
+-- | Column Name    | Type    |
+-- +----------------+---------+
+-- | transaction_id | int     |
+-- | visit_id       | int     |
+-- | amount         | int     |
+-- +----------------+---------+
+-- transaction_id is unique. This table lists all transactions linked to a visit.
+--
+-- Task: Find customer IDs who visited but made no transactions, and count how many such visits each had.
+-- Return the result with columns: customer_id, count_no_trans.
+--
+-- Example:
+-- Visits:
+-- +----------+-------------+
+-- | visit_id | customer_id |
+-- +----------+-------------+
+-- | 1        | 23          |
+-- | 2        | 9           |
+-- | 4        | 30          |
+-- | 5        | 54          |
+-- | 6        | 96          |
+-- | 7        | 54          |
+-- | 8        | 54          |
+-- +----------+-------------+
+--
+-- Transactions:
+-- +----------------+----------+--------+
+-- | transaction_id | visit_id | amount |
+-- +----------------+----------+--------+
+-- | 2              | 5        | 310    |
+-- | 3              | 5        | 300    |
+-- | 9              | 5        | 200    |
+-- | 12             | 1        | 910    |
+-- | 13             | 2        | 970    |
+-- +----------------+----------+--------+
+--
+-- Output:
+-- +-------------+----------------+
+-- | customer_id | count_no_trans |
+-- +-------------+----------------+
+-- | 54          | 2              |
+-- | 30          | 1              |
+-- | 96          | 1              |
+-- +-------------+----------------+
+--
+-- Explanation:
+-- Customers 23 and 9 made transactions in all their visits → excluded.
+-- Customer 30 visited once, no transactions → included.
+-- Customer 54 visited 3 times; 2 visits had no transactions → included with count 2.
+-- Customer 96 visited once, no transactions → included.
+--
+-- Approach:
+-- Perform a LEFT JOIN from Visits to Transactions on visit_id.
+-- Filter rows where transaction_id IS NULL (no transactions for that visit).
+-- Group by customer_id and count the number of such visits.
+-- This gives count_no_trans for each customer.
+
+-- Solution:
+SELECT v.customer_id, COUNT(*) AS count_no_trans
+FROM Visits v
+LEFT JOIN Transactions t
+ON v.visit_id = t.visit_id
+WHERE t.transaction_id IS NULL
+GROUP BY v.customer_id;

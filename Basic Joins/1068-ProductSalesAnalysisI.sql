@@ -1,0 +1,69 @@
+-- Question: Product Sales Analysis I
+--
+-- Table: Sales
+-- +-----------+------------+------+----------+-------+
+-- | Column    | Type       |
+-- +-----------+------------+------+----------+-------+
+-- | sale_id   | int        |
+-- | product_id| int        |
+-- | year      | int        |
+-- | quantity  | int        |
+-- | price     | int        |
+-- +-----------+------------+------+----------+-------+
+-- (sale_id, year) is the primary key.
+-- product_id references Product table.
+--
+-- Table: Product
+-- +------------+--------------+
+-- | Column     | Type         |
+-- +------------+--------------+
+-- | product_id | int          |
+-- | product_name | varchar    |
+-- +------------+--------------+
+-- product_id is the primary key.
+--
+-- Task: Report the product_name, year, and price for each sale in the Sales table.
+-- Return the result in any order.
+--
+-- Example:
+-- Sales table:
+-- +---------+------------+------+----------+-------+
+-- | sale_id | product_id | year | quantity | price |
+-- +---------+------------+------+----------+-------+
+-- | 1       | 100        | 2008 | 10       | 5000  |
+-- | 2       | 100        | 2009 | 12       | 5000  |
+-- | 7       | 200        | 2011 | 15       | 9000  |
+-- +---------+------------+------+----------+-------+
+--
+-- Product table:
+-- +------------+--------------+
+-- | product_id | product_name |
+-- +------------+--------------+
+-- | 100        | Nokia        |
+-- | 200        | Apple        |
+-- | 300        | Samsung      |
+-- +------------+--------------+
+--
+-- Output:
+-- +--------------+-------+-------+
+-- | product_name | year  | price |
+-- +--------------+-------+-------+
+-- | Nokia        | 2008  | 5000  |
+-- | Nokia        | 2009  | 5000  |
+-- | Apple        | 2011  | 9000  |
+-- +--------------+-------+-------+
+--
+-- Explanation:
+-- For each sale, join with the Product table to get product_name.
+-- Example: sale_id 1 corresponds to product_id 100 → Nokia sold in 2008 for 5000.
+--
+-- Approach:
+-- Use an INNER JOIN between Sales and Product on product_id.
+-- Select product_name, year, and price from the joined tables.
+-- No additional filtering is needed.
+
+-- Solution:
+SELECT p.product_name, s.year, s.price
+FROM Sales s
+JOIN Product p
+ON s.product_id = p.product_id;

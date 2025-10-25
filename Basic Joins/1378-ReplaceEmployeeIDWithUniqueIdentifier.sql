@@ -1,0 +1,70 @@
+-- Question: Replace Employee ID With The Unique Identifier
+--
+-- Table: Employees
+-- +------------+---------+
+-- | Column Name| Type    |
+-- +------------+---------+
+-- | id         | int     |
+-- | name       | varchar |
+-- +------------+---------+
+-- id is the primary key.
+--
+-- Table: EmployeeUNI
+-- +------------+---------+
+-- | Column Name| Type    |
+-- +------------+---------+
+-- | id         | int     |
+-- | unique_id  | int     |
+-- +------------+---------+
+-- (id, unique_id) is the primary key.
+--
+-- Task: Show the unique ID of each employee.
+-- If a user does not have a unique ID, show NULL instead.
+-- Return the result table with columns unique_id and name, in any order.
+--
+-- Example:
+-- Employees table:
+-- +----+----------+
+-- | id | name     |
+-- +----+----------+
+-- | 1  | Alice    |
+-- | 7  | Bob      |
+-- | 11 | Meir     |
+-- | 90 | Winston  |
+-- | 3  | Jonathan |
+-- +----+----------+
+--
+-- EmployeeUNI table:
+-- +----+-----------+
+-- | id | unique_id |
+-- +----+-----------+
+-- | 3  | 1         |
+-- | 11 | 2         |
+-- | 90 | 3         |
+-- +----+-----------+
+--
+-- Output:
+-- +-----------+----------+
+-- | unique_id | name     |
+-- +-----------+----------+
+-- | NULL      | Alice    |
+-- | NULL      | Bob      |
+-- | 2         | Meir     |
+-- | 3         | Winston  |
+-- | 1         | Jonathan |
+-- +-----------+----------+
+--
+-- Explanation:
+-- Employees Alice and Bob do not have entries in EmployeeUNI, so their unique_id is NULL.
+-- Employees Meir, Winston, and Jonathan have matching unique IDs in EmployeeUNI.
+--
+-- Approach:
+-- We perform a LEFT JOIN from Employees to EmployeeUNI on id.
+-- This ensures all employees appear, and missing unique_id values appear as NULL.
+-- Then select unique_id and name for the output.
+
+-- Solution:
+SELECT euni.unique_id, e.name
+FROM Employees e
+LEFT JOIN EmployeeUNI euni
+ON e.id = euni.id;

@@ -1,0 +1,56 @@
+-- Question: Big Countries
+-- 
+-- Table: World
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | name        | varchar |
+-- | continent   | varchar |
+-- | area        | int     |
+-- | population  | int     |
+-- | gdp         | bigint  |
+-- +-------------+---------+
+-- name is the primary key.
+-- Each row gives information about a country: its name, continent, area (km2), population, and GDP.
+--
+-- Task: A country is considered "big" if:
+-- 1. Its area is at least 3,000,000 km2, OR
+-- 2. Its population is at least 25,000,000.
+-- Return the name, population, and area of all big countries.
+--
+-- Example:
+-- Input:
+-- +-------------+-----------+---------+------------+--------------+
+-- | name        | continent | area    | population | gdp          |
+-- +-------------+-----------+---------+------------+--------------+
+-- | Afghanistan | Asia      | 652230  | 25500100   | 20343000000  |
+-- | Albania     | Europe    | 28748   | 2831741    | 12960000000  |
+-- | Algeria     | Africa    | 2381741 | 37100000   | 188681000000 |
+-- | Andorra     | Europe    | 468     | 78115      | 3712000000   |
+-- | Angola      | Africa    | 1246700 | 20609294   | 100990000000 |
+-- +-------------+-----------+---------+------------+--------------+
+--
+-- Output:
+-- +-------------+------------+---------+
+-- | name        | population | area    |
+-- +-------------+------------+---------+
+-- | Afghanistan | 25500100   | 652230  |
+-- | Algeria     | 37100000   | 2381741 |
+-- +-------------+------------+---------+
+--
+-- Explanation:
+-- Afghanistan and Algeria are included because:
+-- - Afghanistan has a population of 25,500,100 >= 25,000,000
+-- - Algeria has a population of 37,100,000 >= 25,000,000
+-- Other countries do not meet either the area or population thresholds.
+--
+-- Approach:
+-- We filter the World table for countries where either:
+-- - area >= 3000000 OR
+-- - population >= 25000000
+-- The query simply selects name, population, and area for these countries.
+
+-- Solution:
+SELECT name, population, area
+FROM World
+WHERE area >= 3000000 OR population >= 25000000;

@@ -1,0 +1,49 @@
+-- Question: Recyclable and Low Fat Products
+-- 
+-- Table: Products
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | product_id  | int     |
+-- | low_fats    | enum    |
+-- | recyclable  | enum    |
+-- +-------------+---------+
+-- product_id is the primary key.
+-- low_fats is 'Y' for low fat products, 'N' otherwise.
+-- recyclable is 'Y' for recyclable products, 'N' otherwise.
+--
+-- Task: Find the ids of products that are both low fat and recyclable.
+--
+-- Example:
+-- Input:
+-- +------------+----------+------------+
+-- | product_id | low_fats | recyclable |
+-- +------------+----------+------------+
+-- | 0          | Y        | N          |
+-- | 1          | Y        | Y          |
+-- | 2          | N        | Y          |
+-- | 3          | Y        | Y          |
+-- | 4          | N        | N          |
+-- +------------+----------+------------+
+--
+-- Output:
+-- +------------+
+-- | product_id |
+-- +------------+
+-- | 1          |
+-- | 3          |
+-- +------------+
+--
+-- Explanation: Only products 1 and 3 have both low_fats = 'Y' and recyclable = 'Y'.
+--
+-- Approach:
+-- The problem asks for products that satisfy two conditions simultaneously:
+-- 1. low_fats = 'Y'
+-- 2. recyclable = 'Y'
+-- We can simply use a WHERE clause with an AND operator to filter rows that satisfy both conditions.
+-- This is efficient because no joins or aggregations are needed — we only filter the Products table based on its columns.
+
+-- Solution:
+SELECT product_id
+FROM Products
+WHERE low_fats = 'Y' AND recyclable = 'Y';

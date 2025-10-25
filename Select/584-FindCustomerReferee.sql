@@ -1,0 +1,56 @@
+-- Question: Find Customer Referee
+-- 
+-- Table: Customer
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | id          | int     |
+-- | name        | varchar |
+-- | referee_id  | int     |
+-- +-------------+---------+
+-- id is the primary key.
+-- Each row shows a customer's id, name, and the id of the customer who referred them (referee_id).
+--
+-- Task: Find the names of customers that are either:
+-- 1. Referred by any customer whose id is NOT 2.
+-- 2. Not referred by any customer (referee_id IS NULL).
+-- Return the result in any order.
+--
+-- Example:
+-- Input:
+-- +----+------+------------+
+-- | id | name | referee_id |
+-- +----+------+------------+
+-- | 1  | Will | NULL       |
+-- | 2  | Jane | NULL       |
+-- | 3  | Alex | 2          |
+-- | 4  | Bill | NULL       |
+-- | 5  | Zack | 1          |
+-- | 6  | Mark | 2          |
+-- +----+------+------------+
+--
+-- Output:
+-- +------+
+-- | name |
+-- +------+
+-- | Will |
+-- | Jane |
+-- | Bill |
+-- | Zack |
+-- +------+
+--
+-- Explanation: 
+-- Customers Will, Jane, and Bill have no referee, so they are included.
+-- Customer Zack was referred by id 1 (not 2), so included.
+-- Customers Alex and Mark were referred by customer id 2, so excluded.
+--
+-- Approach:
+-- We only need to filter the Customer table based on referee_id:
+-- - Include rows where referee_id IS NULL (not referred by anyone).
+-- - Include rows where referee_id != 2 (referred by someone other than id 2).
+-- We use the OR operator to combine these two conditions in a WHERE clause.
+
+-- Solution:
+SELECT name
+FROM Customer
+WHERE referee_id IS NULL OR referee_id != 2;
