@@ -1,0 +1,96 @@
+-- File: 1934-ConfirmationRate.sql
+--
+-- Question: Confirmation Rate
+--
+-- Table: Signups
+-- +----------------+----------+---------------------------------------------+
+-- | Column Name    | Type     | Description                                 |
+-- +----------------+----------+---------------------------------------------+
+-- | user_id        | int      | Unique ID of the user                       |
+-- | time_stamp     | datetime | Timestamp when the user signed up           |
+-- +----------------+----------+---------------------------------------------+
+-- Primary Key: user_id
+--
+-- Table: Confirmations
+-- +----------------+----------+---------------------------------------------+
+-- | Column Name    | Type     | Description                                 |
+-- +----------------+----------+---------------------------------------------+
+-- | user_id        | int      | Foreign key referencing Signups(user_id)    |
+-- | time_stamp     | datetime | Timestamp when the confirmation was sent    |
+-- | action         | ENUM     | Either 'confirmed' or 'timeout'             |
+-- +----------------+----------+---------------------------------------------+
+-- Primary Key: (user_id, time_stamp)
+-- Notes:
+--  - Each confirmation record belongs to a user.
+--  - A user may have multiple confirmation attempts.
+--  - Users may exist in Signups without any confirmation record.
+--
+-- Task:
+-- Compute the confirmation rate for each user, defined as:
+--     (# of 'confirmed' messages) / (total # of messages)
+-- If a user has no confirmation records, their rate is 0.
+-- Round the result to two decimal places.
+--
+-- Example:
+-- Input:
+-- Signups:
+-- +---------+---------------------+
+-- | user_id | time_stamp          |
+-- +---------+---------------------+
+-- | 3       | 2020-03-21 10:16:13 |
+-- | 7       | 2020-01-04 13:57:59 |
+-- | 2       | 2020-07-29 23:09:44 |
+-- | 6       | 2020-12-09 10:39:37 |
+-- +---------+---------------------+
+--
+-- Confirmations:
+-- +---------+---------------------+-----------+
+-- | user_id | time_stamp          | action    |
+-- +---------+---------------------+-----------+
+-- | 3       | 2021-01-06 03:30:46 | timeout   |
+-- | 3       | 2021-07-14 14:00:00 | timeout   |
+-- | 7       | 2021-06-12 11:57:29 | confirmed |
+-- | 7       | 2021-06-13 12:58:28 | confirmed |
+-- | 7       | 2021-06-14 13:59:27 | confirmed |
+-- | 2       | 2021-01-22 00:00:00 | confirmed |
+-- | 2       | 2021-02-28 23:59:59 | timeout   |
+-- +---------+---------------------+-----------+
+--
+-- Output:
+-- +---------+-------------------+
+-- | user_id | confirmation_rate |
+-- +---------+-------------------+
+-- | 6       | 0.00              |
+-- | 3       | 0.00              |
+-- | 7       | 1.00              |
+-- | 2       | 0.50              |
+-- +---------+-------------------+
+--
+-- Explanation:
+-- - User 6: No confirmations → rate = 0
+-- - User 3: 0 confirmed / 2 total = 0.00
+-- - User 7: 3 confirmed / 3 total = 1.00
+-- - User 2: 1 confirmed / 2 total = 0.50
+--
+-- Approach (Detailed):
+-- 1. The Signups table ensures every user appears in the result.
+-- 2. LEFT JOIN Confirmations to include users with or without confirmation records.
+-- 3. For each user:
+--      - COUNT(c.action) gives total attempts.
+--      - SUM(CASE WHEN c.action = 'confirmed' THEN 1 ELSE 0 END) gives confirmed count.
+-- 4. Divide confirmed count by total attempts. If no attempts exist, treat as 0.
+-- 5. Use ROUND(..., 2) for a two-decimal precision rate.
+-- 6. Return user_id with the computed confirmation_rate.
+--
+-- This approach avoids division by NULL by defaulting to 0 when no confirmations exist.
+--
+-- Solution:
+SELECT
+    s.user_id,
+    ROUND(IFNULL(SUM(c.action = 'confirmed') / COUNT(c.action), 0), 2)
+    AS confirmation_rate
+FROM
+    Signups s
+    LEFT JOIN Confirmations c ON s.user_id = c.user_id
+GROUP BY
+    s.user_id;
