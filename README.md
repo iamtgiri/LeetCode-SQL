@@ -1,4 +1,4 @@
-<h4 align="center">Last Updated: 02-11-2025 00:39</h4>
+<h4 align="center">Last Updated: 02-11-2025 00:41</h4>
 
 <h1 align="center">LeetCode SQL Solutions</h1>
 
@@ -14,18 +14,7 @@ This repository contains **LeetCode SQL problem solutions**, organized by topic.
 Each `.sql` file represents one problem — clean, tested and runnable in LeetCode's MySQL environment.
 
 ---
-## 📂 Categories
-- [Select](#-select)
-- [Basic Joins](#-basic_joins)
-- [Basic Aggregate Functions](#-basic_aggregate_functions)
-
----
 ## ※ Problems List
-
-## ■ Select
-<details>
-  <summary>Click to expand</summary>
-
 - [1148 - Article Views I](Select/1148-ArticleViewsI.sql)
 - [1683 - Invalid Tweets](Select/1683-InvalidTweets.sql)
 - [1757 - Recyclable And Low Fat Products](Select/1757-RecyclableAndLowFatProducts.sql)
@@ -33,11 +22,6 @@ Each `.sql` file represents one problem — clean, tested and runnable in LeetCo
 - [595 - Big Countries](Select/595-BigCountries.sql)
 
 </details>
-
-## ■ Basic Joins
-<details>
-  <summary>Click to expand</summary>
-
 - [1068 - Product Sales Analysis I](Basic_Joins/1068-ProductSalesAnalysisI.sql)
 - [1280 - Students And Examinations](Basic_Joins/1280-StudentsAndExaminations.sql)
 - [1378 - Replace Employee I D With Unique Identifier](Basic_Joins/1378-ReplaceEmployeeIDWithUniqueIdentifier.sql)
@@ -49,11 +33,6 @@ Each `.sql` file represents one problem — clean, tested and runnable in LeetCo
 - [577 - Employee Bonus](Basic_Joins/577-EmployeeBonus.sql)
 
 </details>
-
-## ■ Basic Aggregate Functions
-<details>
-  <summary>Click to expand</summary>
-
 - [1075 - Project Employees I](Basic_Aggregate_Functions/1075-ProjectEmployeesI.sql)
 - [1251 - Average Selling Price](Basic_Aggregate_Functions/1251-AverageSellingPrice.sql)
 - [1633 - Percentage Of Users Attended A Contest](Basic_Aggregate_Functions/1633-PercentageOfUsersAttendedAContest.sql)
