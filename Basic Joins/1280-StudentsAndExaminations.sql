@@ -124,3 +124,6 @@ GROUP BY
 ORDER BY
     s.student_id,
     sub.subject_name;
+    
+-- The above SQL query generates all possible combinations of students and subjects using a CROSS JOIN.
+-- It then LEFT JOINs with the Examinations table to count how many times each student attended each subject's exam.
